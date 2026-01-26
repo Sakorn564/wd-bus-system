@@ -110,6 +110,10 @@
             font-size: 1em;
         }
 
+        .btn-feedback {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
         .search-filters {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -270,7 +274,7 @@
         <div class="header">
             <h1>🚌 ระบบจัดการสายรถ Western Digital</h1>
             <p>Bus Route Management System - One Stop Service</p>
-            <p style="color: #11998e; font-weight: bold; margin-top: 10px;">✅ ข้อมูลครบ 60+ รถ | ค้นหาได้ทุกรูปแบบ</p>
+            <p style="color: #11998e; font-weight: bold; margin-top: 10px;">✅ ข้อมูลครบ 60+ รถ | ลงทะเบียนผ่าน Microsoft Forms</p>
         </div>
 
         <!-- Home Section -->
@@ -305,7 +309,7 @@
                     <a href="https://forms.office.com/pages/responsepage.aspx?id=A4gctvMWNUybF29l9EHfhqe2gtXUmJtFml6l63ZoPX1UREJESDY1Q0EyWk5OUlkzQzdOV1M1QkVMMC4u&origin=QRCode&qrcodeorigin=presentation&route=shorturl" 
                        target="_blank" 
                        class="btn">
-                        📝 ลงทะเบียนใช้บริการ (Microsoft Forms)
+                        📝 ลงทะเบียนใช้บริการ
                     </a>
                     <button class="btn" onclick="showSection('search')">
                         🔍 ค้นหาสายรถ/หมายเลขรถ
@@ -315,12 +319,31 @@
                     </button>
                 </div>
 
+                <div style="margin-top: 30px;">
+                    <a href="https://app.smartsheet.com/b/form/228b63381cd542e584c6f92960277d83" 
+                       target="_blank" 
+                       class="btn btn-feedback">
+                        💬 แจ้งปัญหา/ข้อเสนอแนะ
+                    </a>
+                </div>
+
                 <div style="margin-top: 40px; padding: 20px; background: #e8f5e9; border-radius: 10px;">
-                    <h4 style="color: #2e7d32; margin-bottom: 10px;">✅ วิธีใช้งาน:</h4>
+                    <h4 style="color: #2e7d32; margin-bottom: 10px;">✅ ฟีเจอร์ทั้งหมด:</h4>
                     <p style="color: #2e7d32; text-align: left; line-height: 1.8;">
-                        1️⃣ <strong>ลงทะเบียน:</strong> คลิกปุ่มสีม่วง → กรอกฟอร์ม Microsoft Forms<br>
-                        2️⃣ <strong>ค้นหารถ:</strong> ค้นหาด้วยหมายเลขรถ จังหวัด โซน หรือเส้นทาง<br>
-                        3️⃣ <strong>ข้อมูลบริษัท:</strong> ดูเบอร์ติดต่อและรายละเอียดบริษัท
+                        1️⃣ <strong>ลงทะเบียน:</strong> ผ่าน Microsoft Forms ของ WD<br>
+                        2️⃣ <strong>ค้นหารถ:</strong> ค้นหาด้วยหมายเลข จังหวัด โซน เส้นทาง<br>
+                        3️⃣ <strong>ข้อมูลบริษัท:</strong> รายละเอียดและเบอร์ติดต่อทั้ง 3 บริษัท<br>
+                        4️⃣ <strong>แจ้งปัญหา:</strong> แจ้งปัญหา/ข้อเสนอแนะผ่าน Smartsheet
+                    </p>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: #fff3e0; border-radius: 10px;">
+                    <h4 style="color: #f57c00; margin-bottom: 10px;">💬 มีปัญหาหรือข้อเสนอแนะ?</h4>
+                    <p style="color: #555; line-height: 1.8;">
+                        • คลิกปุ่ม "💬 แจ้งปัญหา/ข้อเสนอแนะ" (สีแดง)<br>
+                        • กรอกรายละเอียดใน Smartsheet Form<br>
+                        • ทีมงานจะดำเนินการตรวจสอบและปรับปรุง<br>
+                        • ติดตามสถานะได้จาก Admin
                     </p>
                 </div>
 
@@ -372,7 +395,7 @@
 
             <div id="searchResults" style="margin-bottom: 20px;">
                 <strong style="color: #667eea; font-size: 1.2em;">
-                    พบทั้งหมด: <span id="resultCount">60</span> รถ
+                    พบทั้งหมด: <span id="resultCount">68</span> รถ
                 </strong>
             </div>
 
@@ -398,7 +421,6 @@
                         <h4>📊 สถิติ:</h4>
                         <div class="route-item">รถทั้งหมด: 34 คัน</div>
                         <div class="route-item">จังหวัด: ฉะเชิงเทรา, ปราจีนบุรี, สระแก้ว</div>
-                        <div class="route-item">โซน: 6 โซน</div>
                     </div>
                     <div class="contact-info">
                         <h4 style="color: #667eea; margin-bottom: 15px;">📞 ช่องทางติดต่อ:</h4>
@@ -429,7 +451,6 @@
                         <h4>📊 สถิติ:</h4>
                         <div class="route-item">รถทั้งหมด: 13 คัน</div>
                         <div class="route-item">จังหวัด: ปราจีนบุรี, ฉะเชิงเทรา</div>
-                        <div class="route-item">โซน: 5 โซน</div>
                     </div>
                     <div class="contact-info">
                         <h4 style="color: #667eea; margin-bottom: 15px;">📞 ช่องทางติดต่อ:</h4>
@@ -452,7 +473,6 @@
                         <h4>📊 สถิติ:</h4>
                         <div class="route-item">รถทั้งหมด: 35 คัน</div>
                         <div class="route-item">จังหวัด: นครนายก, ปราจีนบุรี, ฉะเชิงเทรา</div>
-                        <div class="route-item">โซน: 8 โซน</div>
                     </div>
                     <div class="contact-info">
                         <h4 style="color: #667eea; margin-bottom: 15px;">📞 ช่องทางติดต่อ:</h4>
@@ -598,7 +618,7 @@
             displayBuses(filtered);
         }
 
-        console.log('✅ ระบบพร้อมใช้งาน - เชื่อม Microsoft Forms แล้ว!');
+        console.log('✅ ระบบพร้อมใช้งาน - เชื่อม Microsoft Forms + Smartsheet!');
     </script>
 </body>
 </html>
