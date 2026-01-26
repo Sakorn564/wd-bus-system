@@ -96,6 +96,7 @@
             cursor: pointer;
             border: none;
             transition: all 0.3s;
+            text-decoration: none;
         }
 
         .btn:hover {
@@ -123,14 +124,6 @@
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             font-size: 1em;
-            transition: all 0.3s;
-        }
-
-        .search-filters input:focus,
-        .search-filters select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .bus-list {
@@ -261,38 +254,6 @@
             border-left: 4px solid #667eea;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1em;
-        }
-
-        .success-message {
-            background: #e8f5e9;
-            border: 2px solid #2e7d32;
-            color: #2e7d32;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 1.2em;
-        }
-
         @media (max-width: 768px) {
             .bus-list, .company-grid {
                 grid-template-columns: 1fr;
@@ -309,7 +270,7 @@
         <div class="header">
             <h1>🚌 ระบบจัดการสายรถ Western Digital</h1>
             <p>Bus Route Management System - One Stop Service</p>
-            <p style="color: #11998e; font-weight: bold; margin-top: 10px;">✅ ค้นหาด้วยหมายเลขรถ จังหวัด โซน และเส้นทาง</p>
+            <p style="color: #11998e; font-weight: bold; margin-top: 10px;">✅ ข้อมูลครบ 60+ รถ | ค้นหาได้ทุกรูปแบบ</p>
         </div>
 
         <!-- Home Section -->
@@ -317,7 +278,8 @@
             <div class="welcome-box">
                 <h2>🎉 ยินดีต้อนรับสู่ระบบจัดการสายรถ!</h2>
                 <p style="color: #666; font-size: 1.2em; margin-bottom: 30px;">
-                    ข้อมูลครบถ้วน 60+ รถ จาก 3 บริษัท
+                    ข้อมูลครบถ้วน 60+ รถ จาก 3 บริษัท<br>
+                    <strong style="color: #11998e;">เข้ามาแล้วใช้งานได้เลยทันที!</strong>
                 </p>
 
                 <div class="stats">
@@ -334,15 +296,17 @@
                         <div class="stat-label">โซนให้บริการ</div>
                     </div>
                     <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                        <div class="stat-number" id="totalUsers">0</div>
-                        <div class="stat-label">ผู้ลงทะเบียน</div>
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">จังหวัด</div>
                     </div>
                 </div>
 
                 <div style="margin-top: 40px;">
-                    <button class="btn" onclick="showSection('register')">
-                        📝 ลงทะเบียนใช้บริการ
-                    </button>
+                    <a href="https://forms.office.com/pages/responsepage.aspx?id=A4gctvMWNUybF29l9EHfhqe2gtXUmJtFml6l63ZoPX1UREJESDY1Q0EyWk5OUlkzQzdOV1M1QkVMMC4u&origin=QRCode&qrcodeorigin=presentation&route=shorturl" 
+                       target="_blank" 
+                       class="btn">
+                        📝 ลงทะเบียนใช้บริการ (Microsoft Forms)
+                    </a>
                     <button class="btn" onclick="showSection('search')">
                         🔍 ค้นหาสายรถ/หมายเลขรถ
                     </button>
@@ -350,36 +314,24 @@
                         🏢 ข้อมูลบริษัทรถ
                     </button>
                 </div>
-            </div>
-        </div>
 
-        <!-- Registration Section -->
-        <div id="register-section" class="section">
-            <button class="btn btn-back" onclick="showSection('home')">← กลับหน้าหลัก</button>
-            <h2 style="color: #667eea; margin: 30px 0;">📝 แบบฟอร์มลงทะเบียน</h2>
-            <form id="registrationForm" onsubmit="submitRegistration(event)">
-                <div class="form-group">
-                    <label>ชื่อ-นามสกุล <span style="color: red;">*</span></label>
-                    <input type="text" id="fullName" required>
+                <div style="margin-top: 40px; padding: 20px; background: #e8f5e9; border-radius: 10px;">
+                    <h4 style="color: #2e7d32; margin-bottom: 10px;">✅ วิธีใช้งาน:</h4>
+                    <p style="color: #2e7d32; text-align: left; line-height: 1.8;">
+                        1️⃣ <strong>ลงทะเบียน:</strong> คลิกปุ่มสีม่วง → กรอกฟอร์ม Microsoft Forms<br>
+                        2️⃣ <strong>ค้นหารถ:</strong> ค้นหาด้วยหมายเลขรถ จังหวัด โซน หรือเส้นทาง<br>
+                        3️⃣ <strong>ข้อมูลบริษัท:</strong> ดูเบอร์ติดต่อและรายละเอียดบริษัท
+                    </p>
                 </div>
-                <div class="form-group">
-                    <label>รหัสพนักงาน <span style="color: red;">*</span></label>
-                    <input type="text" id="employeeId" required>
+
+                <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">📞 ติดต่อสอบถาม</h3>
+                    <p style="color: #666; font-size: 1.1em;">
+                        Admin MFG (K. Jenjira J.)<br>
+                        📧 Ext. 614719, 612778
+                    </p>
                 </div>
-                <div class="form-group">
-                    <label>เบอร์โทรศัพท์ <span style="color: red;">*</span></label>
-                    <input type="tel" id="phone" required>
-                </div>
-                <div class="form-group">
-                    <label>อีเมล <span style="color: red;">*</span></label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label>จุดหมายปลายทาง <span style="color: red;">*</span></label>
-                    <input type="text" id="destination" required>
-                </div>
-                <button type="submit" class="btn" style="width: 100%;">✅ ส่งแบบฟอร์ม</button>
-            </form>
+            </div>
         </div>
 
         <!-- Search Section -->
@@ -389,7 +341,7 @@
             <h2 style="color: #667eea; margin: 30px 0;">🔍 ค้นหารถด้วยหมายเลข จังหวัด โซน หรือเส้นทาง</h2>
             
             <div class="search-filters">
-                <input type="text" id="searchBusNumber" placeholder="🔢 หมายเลขรถ (B7, B53, V2)" oninput="searchBuses()">
+                <input type="text" id="searchBusNumber" placeholder="🔢 หมายเลขรถ (B7, V2, SP13)" oninput="searchBuses()">
                 <select id="filterContractor" onchange="searchBuses()">
                     <option value="">ทุก Contractor</option>
                     <option value="Somsak">SOMSAK</option>
@@ -410,11 +362,11 @@
             <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
                 <strong style="color: #1976d2; font-size: 1.1em;">💡 เคล็ดลับการค้นหา:</strong>
                 <p style="color: #555; margin-top: 10px; line-height: 1.8;">
-                    • <strong>หมายเลขรถ:</strong> พิมพ์ B7, B53, V2, SP13<br>
-                    • <strong>Contractor:</strong> เลือก SOMSAK, RACHA, ATP30<br>
-                    • <strong>จังหวัด:</strong> เลือกฉะเชิงเทรา, ปราจีนบุรี, สระแก้ว, นครนายก<br>
-                    • <strong>โซน:</strong> พิมพ์สนามชัย, กบินทร์บุรี, สระแก้ว, พนมสารคาม<br>
-                    • <strong>เส้นทาง:</strong> พิมพ์ชื่อหมู่บ้านหรือเส้นทาง
+                    • <strong>หมายเลขรถ:</strong> B7, B53, V2, SP13 (ค้นหาแบบบางส่วนได้)<br>
+                    • <strong>Contractor:</strong> SOMSAK (34 คัน), RACHA (13 คัน), ATP30 (35 คัน)<br>
+                    • <strong>จังหวัด:</strong> กรองตามพื้นที่<br>
+                    • <strong>โซน:</strong> สนามชัย, กบินทร์บุรี, ประจันตคาม, กรอกสมบูรณ์<br>
+                    • <strong>เส้นทาง:</strong> ชื่อหมู่บ้าน/พื้นที่
                 </p>
             </div>
 
@@ -445,7 +397,8 @@
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
                         <div class="route-item">รถทั้งหมด: 34 คัน</div>
-                        <div class="route-item">โซนให้บริการ: 6 โซน</div>
+                        <div class="route-item">จังหวัด: ฉะเชิงเทรา, ปราจีนบุรี, สระแก้ว</div>
+                        <div class="route-item">โซน: 6 โซน</div>
                     </div>
                     <div class="contact-info">
                         <h4 style="color: #667eea; margin-bottom: 15px;">📞 ช่องทางติดต่อ:</h4>
@@ -475,7 +428,8 @@
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
                         <div class="route-item">รถทั้งหมด: 13 คัน</div>
-                        <div class="route-item">โซนให้บริการ: 5 โซน</div>
+                        <div class="route-item">จังหวัด: ปราจีนบุรี, ฉะเชิงเทรา</div>
+                        <div class="route-item">โซน: 5 โซน</div>
                     </div>
                     <div class="contact-info">
                         <h4 style="color: #667eea; margin-bottom: 15px;">📞 ช่องทางติดต่อ:</h4>
@@ -497,7 +451,8 @@
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
                         <div class="route-item">รถทั้งหมด: 35 คัน</div>
-                        <div class="route-item">โซนให้บริการ: 8 โซน</div>
+                        <div class="route-item">จังหวัด: นครนายก, ปราจีนบุรี, ฉะเชิงเทรา</div>
+                        <div class="route-item">โซน: 8 โซน</div>
                     </div>
                     <div class="contact-info">
                         <h4 style="color: #667eea; margin-bottom: 15px;">📞 ช่องทางติดต่อ:</h4>
@@ -516,7 +471,6 @@
     </div>
 
     <script>
-        // ข้อมูลรถทั้งหมด
         const allBuses = [
             {busNumber:'B7',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'ศูนย์วิจัยยาง'},
             {busNumber:'B21',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'คีรี'},
@@ -588,39 +542,10 @@
             {busNumber:'B45/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'กรอกสมบูรณ์'}
         ];
 
-        let registrations = JSON.parse(localStorage.getItem('registrations')) || [];
-        document.getElementById('totalUsers').textContent = registrations.length;
-
         function showSection(sectionName) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionName + '-section').classList.add('active');
             if (sectionName === 'search') displayAllBuses();
-        }
-
-        function submitRegistration(event) {
-            event.preventDefault();
-            const reg = {
-                id: Date.now(),
-                fullName: document.getElementById('fullName').value,
-                employeeId: document.getElementById('employeeId').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                destination: document.getElementById('destination').value,
-                registeredAt: new Date().toISOString()
-            };
-            registrations.push(reg);
-            localStorage.setItem('registrations', JSON.stringify(registrations));
-            document.getElementById('totalUsers').textContent = registrations.length;
-            
-            document.getElementById('register-section').innerHTML = `
-                <button class="btn btn-back" onclick="showSection('home')">← กลับหน้าหลัก</button>
-                <div class="success-message" style="margin-top: 50px;">
-                    <h2>🎉 ลงทะเบียนสำเร็จ!</h2>
-                    <p style="margin-top: 20px;">✅ ข้อมูลบันทึกเรียบร้อย เริ่มใช้บริการได้ทันที</p>
-                    <button class="btn" onclick="location.reload()" style="margin-top: 30px;">ลงทะเบียนคนอื่น</button>
-                    <button class="btn" onclick="showSection('home')" style="margin-top: 30px;">กลับหน้าหลัก</button>
-                </div>
-            `;
         }
 
         function displayAllBuses() {
@@ -673,7 +598,7 @@
             displayBuses(filtered);
         }
 
-        console.log('✅ ระบบพร้อมใช้งาน - ข้อมูล 60+ รถครบถ้วน!');
+        console.log('✅ ระบบพร้อมใช้งาน - เชื่อม Microsoft Forms แล้ว!');
     </script>
 </body>
 </html>
