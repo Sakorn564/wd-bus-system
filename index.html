@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚌 Transportation Smart Serch</title>
+    <title>🚌 ระบบจัดการสายรถ Western Digital</title>
     <style>
         * {
             margin: 0;
@@ -118,6 +118,7 @@
             background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
             padding: 10px 30px;
             font-size: 1em;
+            margin-top: 10px;
         }
 
         .search-filters {
@@ -136,45 +137,50 @@
             font-size: 1em;
         }
 
+        /* ⭐ ปรับ Grid Layout ให้แสดง 4 คอลัมน์ */
         .bus-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin-top: 20px;
         }
 
+        /* ⭐ ปรับ Card ให้เหมือนในรูป */
         .bus-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            padding: 25px;
-            border-radius: 15px;
-            border-left: 5px solid #667eea;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
             transition: all 0.3s;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .bus-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
         }
 
+        /* ⭐ Badge หมายเลขรถ */
         .bus-number-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            background: linear-gradient(135deg, #ff9800 0%, #ff6b00 100%);
             color: white;
-            padding: 10px 25px;
-            border-radius: 25px;
+            padding: 8px 20px;
+            border-radius: 20px;
             font-weight: bold;
-            font-size: 1.3em;
+            font-size: 1.1em;
             margin-bottom: 15px;
         }
 
+        /* ⭐ Badge Contractor */
         .contractor-badge {
             display: inline-block;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 0.9em;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
             font-weight: bold;
-            margin-left: 10px;
+            margin-left: 8px;
         }
 
         .contractor-somsak {
@@ -192,15 +198,28 @@
             color: #7b1fa2;
         }
 
-        .info-row {
+        /* ⭐ ข้อมูลในการ์ด */
+        .bus-route-title {
+            color: #333;
+            font-size: 1.1em;
+            font-weight: bold;
             margin: 10px 0;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
+            min-height: 50px;
         }
 
-        .info-row strong {
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+
+        .info-item strong {
             color: #667eea;
+            min-width: 100px;
         }
 
         .company-grid {
@@ -282,6 +301,7 @@
             padding: 60px 20px;
             background: #fff3cd;
             border-radius: 15px;
+            grid-column: 1 / -1;
         }
 
         .no-results h3 {
@@ -293,11 +313,29 @@
             color: #856404;
         }
 
+        /* ⭐ Responsive: 3 คอลัมน์บน Tablet */
+        @media (max-width: 1400px) {
+            .bus-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* ⭐ Responsive: 2 คอลัมน์บนมือถือใหญ่ */
+        @media (max-width: 1024px) {
+            .bus-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ⭐ Responsive: 1 คอลัมน์บนมือถือเล็ก */
         @media (max-width: 768px) {
-            .bus-list, .company-grid {
+            .bus-list {
                 grid-template-columns: 1fr;
             }
             .search-filters {
+                grid-template-columns: 1fr;
+            }
+            .company-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -307,7 +345,7 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>🚌 WWC Tranportation Smart serch</h1>
+            <h1>🚌 ระบบจัดการสายรถ Western Digital</h1>
             <p>Bus Route Management System - One Stop Service</p>
             <p style="color: #11998e; font-weight: bold; margin-top: 10px;">
                 ✅ ข้อมูลครบ <span id="headerTotalBuses">68</span> รถ | ลงทะเบียนผ่าน Microsoft Forms
@@ -437,7 +475,7 @@
                 <strong style="color: #1976d2; font-size: 1.1em;">💡 เคล็ดลับการค้นหา:</strong>
                 <p style="color: #555; margin-top: 10px; line-height: 1.8;">
                     • <strong>หมายเลขรถ:</strong> B7, B53, V2, SP13 (ค้นหาแบบบางส่วนได้)<br>
-                    • <strong>Contractor:</strong> SOMSAK (<span id="tipSomsak">34</span> คัน), RACHA (<span id="tipRacha">13</span> คัน), ATP30 (<span id="tipATP30">35</span> คัน)<br>
+                    • <strong>Contractor:</strong> SOMSAK (<span id="tipSomsak">23</span> คัน), RACHA (<span id="tipRacha">12</span> คัน), ATP30 (<span id="tipATP30">33</span> คัน)<br>
                     • <strong>จังหวัด:</strong> กรองตามพื้นที่<br>
                     • <strong>โซน:</strong> สนามชัย, กบินทร์บุรี, ประจันตคาม, กรอกสมบูรณ์<br>
                     • <strong>เส้นทาง:</strong> ชื่อหมู่บ้าน/พื้นที่
@@ -466,7 +504,7 @@
                     </div>
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
-                        <div class="route-item">รถทั้งหมด: <span id="companySomsak">34</span> คัน</div>
+                        <div class="route-item">รถทั้งหมด: <span id="companySomsak">23</span> คัน</div>
                         <div class="route-item">จังหวัด: ฉะเชิงเทรา, ปราจีนบุรี, สระแก้ว</div>
                     </div>
                     <div class="contact-info">
@@ -496,7 +534,7 @@
                     </div>
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
-                        <div class="route-item">รถทั้งหมด: <span id="companyRacha">13</span> คัน</div>
+                        <div class="route-item">รถทั้งหมด: <span id="companyRacha">12</span> คัน</div>
                         <div class="route-item">จังหวัด: ปราจีนบุรี, ฉะเชิงเทรา</div>
                     </div>
                     <div class="contact-info">
@@ -518,7 +556,7 @@
                     </div>
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
-                        <div class="route-item">รถทั้งหมด: <span id="companyATP30">35</span> คัน</div>
+                        <div class="route-item">รถทั้งหมด: <span id="companyATP30">33</span> คัน</div>
                         <div class="route-item">จังหวัด: นครนายก, ปราจีนบุรี, ฉะเชิงเทรา</div>
                     </div>
                     <div class="contact-info">
@@ -625,37 +663,31 @@
 
         // อัพเดทตัวเลขทั้งหมดเมื่อโหลดหน้า
         document.addEventListener('DOMContentLoaded', function() {
-            // อัพเดท Header
             document.getElementById('headerTotalBuses').textContent = stats.total;
-            
-            // อัพเดท Home Section
             document.getElementById('homeTotalBuses').textContent = stats.total;
             document.getElementById('statTotalBuses').textContent = stats.total;
             document.getElementById('statTotalZones').textContent = stats.zones;
             document.getElementById('statTotalProvinces').textContent = stats.provinces;
-            
-            // อัพเดทเคล็ดลับการค้นหา
             document.getElementById('tipSomsak').textContent = stats.somsak;
             document.getElementById('tipRacha').textContent = stats.racha;
             document.getElementById('tipATP30').textContent = stats.atp30;
-            
-            // อัพเดทข้อมูลบริษัท
             document.getElementById('companySomsak').textContent = stats.somsak;
             document.getElementById('companyRacha').textContent = stats.racha;
             document.getElementById('companyATP30').textContent = stats.atp30;
-            
-            // อัพเดทวันที่
             document.getElementById('lastUpdateDate').textContent = lastUpdate;
             
             console.log(`📊 สถิติระบบ: ${stats.total} รถ | Somsak: ${stats.somsak} | Racha: ${stats.racha} | ATP30: ${stats.atp30}`);
-            console.log('✅ ระบบพร้อมใช้งาน - เชื่อม Microsoft Forms + Smartsheet!');
+            console.log('✅ ระบบพร้อมใช้งาน!');
         });
 
         // ฟังก์ชันเปลี่ยนหน้า
         function showSection(sectionName) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionName + '-section').classList.add('active');
-            if (sectionName === 'search') displayAllBuses();
+            
+            if (sectionName === 'search') {
+                displayAllBuses();
+            }
         }
 
         // แสดงรถทั้งหมด
@@ -678,12 +710,10 @@
             `;
         }
 
-        // แสดงรถตามเงื่อนไข
+        // ⭐ แสดงรถตามเงื่อนไข - ปรับ HTML ให้เหมือนรูป
         function displayBuses(buses) {
-            document.getElementById('resultCount').textContent = buses.length;
             const busList = document.getElementById('busList');
             
-            // อัพเดทสถิติ
             updateStats(buses.length);
             
             if (buses.length === 0) {
@@ -705,13 +735,23 @@
                 const contractorClass = `contractor-${bus.contractor.toLowerCase()}`;
                 html += `
                     <div class="bus-card">
-                        <div class="bus-number-badge">🚌 ${bus.busNumber}</div>
+                        <div class="bus-number-badge">🚌 หมายเลขรถ ${bus.busNumber}</div>
                         <span class="contractor-badge ${contractorClass}">${bus.contractor}</span>
-                        <h3 style="color: #667eea; margin: 15px 0;">${bus.route}</h3>
-                        <div class="info-row"><strong>🏢 Contractor:</strong> ${bus.contractor}</div>
-                        <div class="info-row"><strong>📍 จังหวัด:</strong> ${bus.province}</div>
-                        <div class="info-row"><strong>🗺️ โซน:</strong> ${bus.zone}</div>
-                        <div class="info-row"><strong>🎯 เส้นทาง:</strong> ${bus.route}</div>
+                        
+                        <div class="bus-route-title">${bus.route}</div>
+                        
+                        <div class="info-item">
+                            <strong>Main Contractor:</strong> 
+                            <span>${bus.contractor}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>📍 Zone ปลายทาง:</strong> 
+                            <span>${bus.zone}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>🗺️ เส้นทาง:</strong> 
+                            <span>${bus.route}</span>
+                        </div>
                     </div>
                 `;
             });
@@ -723,7 +763,7 @@
         let searchTimeout;
         function searchBusesDebounced() {
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(searchBuses, 300); // รอ 300ms ก่อนค้นหา
+            searchTimeout = setTimeout(searchBuses, 300);
         }
 
         // ฟังก์ชันค้นหารถ
@@ -757,5 +797,3 @@
     </script>
 </body>
 </html>
-
-
