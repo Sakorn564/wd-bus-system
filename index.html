@@ -114,6 +114,12 @@
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         }
 
+        .btn-clear {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            padding: 10px 30px;
+            font-size: 1em;
+        }
+
         .search-filters {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -258,6 +264,35 @@
             border-left: 4px solid #667eea;
         }
 
+        .update-date {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .update-date small {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: #fff3cd;
+            border-radius: 15px;
+        }
+
+        .no-results h3 {
+            color: #856404;
+            margin: 20px 0;
+        }
+
+        .no-results p {
+            color: #856404;
+        }
+
         @media (max-width: 768px) {
             .bus-list, .company-grid {
                 grid-template-columns: 1fr;
@@ -274,7 +309,9 @@
         <div class="header">
             <h1>🚌 ระบบจัดการสายรถ Western Digital</h1>
             <p>Bus Route Management System - One Stop Service</p>
-            <p style="color: #11998e; font-weight: bold; margin-top: 10px;">✅ ข้อมูลครบ 60+ รถ | ลงทะเบียนผ่าน Microsoft Forms</p>
+            <p style="color: #11998e; font-weight: bold; margin-top: 10px;">
+                ✅ ข้อมูลครบ <span id="headerTotalBuses">68</span> รถ | ลงทะเบียนผ่าน Microsoft Forms
+            </p>
         </div>
 
         <!-- Home Section -->
@@ -282,13 +319,13 @@
             <div class="welcome-box">
                 <h2>🎉 ยินดีต้อนรับสู่ระบบจัดการสายรถ!</h2>
                 <p style="color: #666; font-size: 1.2em; margin-bottom: 30px;">
-                    ข้อมูลครบถ้วน 60+ รถ จาก 3 บริษัท<br>
+                    ข้อมูลครบถ้วน <span id="homeTotalBuses">68</span> รถ จาก 3 บริษัท<br>
                     <strong style="color: #11998e;">เข้ามาแล้วใช้งานได้เลยทันที!</strong>
                 </p>
 
                 <div class="stats">
                     <div class="stat-card">
-                        <div class="stat-number">60+</div>
+                        <div class="stat-number" id="statTotalBuses">68</div>
                         <div class="stat-label">รถทั้งหมด</div>
                     </div>
                     <div class="stat-card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
@@ -296,11 +333,11 @@
                         <div class="stat-label">บริษัทรถ</div>
                     </div>
                     <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        <div class="stat-number">15</div>
+                        <div class="stat-number" id="statTotalZones">15</div>
                         <div class="stat-label">โซนให้บริการ</div>
                     </div>
                     <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                        <div class="stat-number">4</div>
+                        <div class="stat-number" id="statTotalProvinces">4</div>
                         <div class="stat-label">จังหวัด</div>
                     </div>
                 </div>
@@ -354,6 +391,14 @@
                         📧 Ext. 614719, 612778
                     </p>
                 </div>
+
+                <!-- วันที่อัพเดทข้อมูล -->
+                <div class="update-date">
+                    <small>
+                        📅 ข้อมูลอัพเดทล่าสุด: <strong id="lastUpdateDate">2025-01-26</strong> | 
+                        ติดต่อ Admin สำหรับการเปลี่ยนแปลงข้อมูล
+                    </small>
+                </div>
             </div>
         </div>
 
@@ -364,7 +409,7 @@
             <h2 style="color: #667eea; margin: 30px 0;">🔍 ค้นหารถด้วยหมายเลข จังหวัด โซน หรือเส้นทาง</h2>
             
             <div class="search-filters">
-                <input type="text" id="searchBusNumber" placeholder="🔢 หมายเลขรถ (B7, V2, SP13)" oninput="searchBuses()">
+                <input type="text" id="searchBusNumber" placeholder="🔢 หมายเลขรถ (B7, V2, SP13)" oninput="searchBusesDebounced()">
                 <select id="filterContractor" onchange="searchBuses()">
                     <option value="">ทุก Contractor</option>
                     <option value="Somsak">SOMSAK</option>
@@ -378,26 +423,28 @@
                     <option value="สระแก้ว">สระแก้ว</option>
                     <option value="นครนายก">นครนายก</option>
                 </select>
-                <input type="text" id="searchZone" placeholder="🗺️ โซน (สนามชัย, กบินทร์บุรี)" oninput="searchBuses()">
-                <input type="text" id="searchRoute" placeholder="🎯 เส้นทาง" oninput="searchBuses()">
+                <input type="text" id="searchZone" placeholder="🗺️ โซน (สนามชัย, กบินทร์บุรี)" oninput="searchBusesDebounced()">
+                <input type="text" id="searchRoute" placeholder="🎯 เส้นทาง" oninput="searchBusesDebounced()">
+            </div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button class="btn btn-clear" onclick="clearSearch()">
+                    🔄 ล้างการค้นหา
+                </button>
             </div>
 
             <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
                 <strong style="color: #1976d2; font-size: 1.1em;">💡 เคล็ดลับการค้นหา:</strong>
                 <p style="color: #555; margin-top: 10px; line-height: 1.8;">
                     • <strong>หมายเลขรถ:</strong> B7, B53, V2, SP13 (ค้นหาแบบบางส่วนได้)<br>
-                    • <strong>Contractor:</strong> SOMSAK (34 คัน), RACHA (13 คัน), ATP30 (35 คัน)<br>
+                    • <strong>Contractor:</strong> SOMSAK (<span id="tipSomsak">34</span> คัน), RACHA (<span id="tipRacha">13</span> คัน), ATP30 (<span id="tipATP30">35</span> คัน)<br>
                     • <strong>จังหวัด:</strong> กรองตามพื้นที่<br>
                     • <strong>โซน:</strong> สนามชัย, กบินทร์บุรี, ประจันตคาม, กรอกสมบูรณ์<br>
                     • <strong>เส้นทาง:</strong> ชื่อหมู่บ้าน/พื้นที่
                 </p>
             </div>
 
-            <div id="searchResults" style="margin-bottom: 20px;">
-                <strong style="color: #667eea; font-size: 1.2em;">
-                    พบทั้งหมด: <span id="resultCount">68</span> รถ
-                </strong>
-            </div>
+            <div id="searchResults" style="margin-bottom: 20px;"></div>
 
             <div id="busList" class="bus-list"></div>
         </div>
@@ -419,7 +466,7 @@
                     </div>
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
-                        <div class="route-item">รถทั้งหมด: 34 คัน</div>
+                        <div class="route-item">รถทั้งหมด: <span id="companySomsak">34</span> คัน</div>
                         <div class="route-item">จังหวัด: ฉะเชิงเทรา, ปราจีนบุรี, สระแก้ว</div>
                     </div>
                     <div class="contact-info">
@@ -449,7 +496,7 @@
                     </div>
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
-                        <div class="route-item">รถทั้งหมด: 13 คัน</div>
+                        <div class="route-item">รถทั้งหมด: <span id="companyRacha">13</span> คัน</div>
                         <div class="route-item">จังหวัด: ปราจีนบุรี, ฉะเชิงเทรา</div>
                     </div>
                     <div class="contact-info">
@@ -471,7 +518,7 @@
                     </div>
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
-                        <div class="route-item">รถทั้งหมด: 35 คัน</div>
+                        <div class="route-item">รถทั้งหมด: <span id="companyATP30">35</span> คัน</div>
                         <div class="route-item">จังหวัด: นครนายก, ปราจีนบุรี, ฉะเชิงเทรา</div>
                     </div>
                     <div class="contact-info">
@@ -491,6 +538,7 @@
     </div>
 
     <script>
+        // ข้อมูลรถทั้งหมด
         const allBuses = [
             {busNumber:'B7',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'ศูนย์วิจัยยาง'},
             {busNumber:'B21',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'คีรี'},
@@ -562,22 +610,93 @@
             {busNumber:'B45/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'กรอกสมบูรณ์'}
         ];
 
+        // วันที่อัพเดทข้อมูลล่าสุด
+        const lastUpdate = '2025-01-26';
+
+        // คำนวณสถิติจากข้อมูลจริง
+        const stats = {
+            total: allBuses.length,
+            somsak: allBuses.filter(b => b.contractor === 'Somsak').length,
+            racha: allBuses.filter(b => b.contractor === 'Racha').length,
+            atp30: allBuses.filter(b => b.contractor === 'ATP30').length,
+            provinces: [...new Set(allBuses.map(b => b.province))].length,
+            zones: [...new Set(allBuses.map(b => b.zone))].length
+        };
+
+        // อัพเดทตัวเลขทั้งหมดเมื่อโหลดหน้า
+        document.addEventListener('DOMContentLoaded', function() {
+            // อัพเดท Header
+            document.getElementById('headerTotalBuses').textContent = stats.total;
+            
+            // อัพเดท Home Section
+            document.getElementById('homeTotalBuses').textContent = stats.total;
+            document.getElementById('statTotalBuses').textContent = stats.total;
+            document.getElementById('statTotalZones').textContent = stats.zones;
+            document.getElementById('statTotalProvinces').textContent = stats.provinces;
+            
+            // อัพเดทเคล็ดลับการค้นหา
+            document.getElementById('tipSomsak').textContent = stats.somsak;
+            document.getElementById('tipRacha').textContent = stats.racha;
+            document.getElementById('tipATP30').textContent = stats.atp30;
+            
+            // อัพเดทข้อมูลบริษัท
+            document.getElementById('companySomsak').textContent = stats.somsak;
+            document.getElementById('companyRacha').textContent = stats.racha;
+            document.getElementById('companyATP30').textContent = stats.atp30;
+            
+            // อัพเดทวันที่
+            document.getElementById('lastUpdateDate').textContent = lastUpdate;
+            
+            console.log(`📊 สถิติระบบ: ${stats.total} รถ | Somsak: ${stats.somsak} | Racha: ${stats.racha} | ATP30: ${stats.atp30}`);
+            console.log('✅ ระบบพร้อมใช้งาน - เชื่อม Microsoft Forms + Smartsheet!');
+        });
+
+        // ฟังก์ชันเปลี่ยนหน้า
         function showSection(sectionName) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionName + '-section').classList.add('active');
             if (sectionName === 'search') displayAllBuses();
         }
 
+        // แสดงรถทั้งหมด
         function displayAllBuses() {
             displayBuses(allBuses);
         }
 
+        // แสดงสถิติการค้นหา
+        function updateStats(currentResults) {
+            document.getElementById('searchResults').innerHTML = `
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                            padding: 20px; border-radius: 15px; color: white; margin-bottom: 20px;">
+                    <div style="font-size: 1.5em; font-weight: bold;">
+                        📊 ผลการค้นหา: ${currentResults} รถ
+                    </div>
+                    <div style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">
+                        จากทั้งหมด ${stats.total} รถ ใน ${stats.provinces} จังหวัด ${stats.zones} โซน
+                    </div>
+                </div>
+            `;
+        }
+
+        // แสดงรถตามเงื่อนไข
         function displayBuses(buses) {
             document.getElementById('resultCount').textContent = buses.length;
             const busList = document.getElementById('busList');
             
+            // อัพเดทสถิติ
+            updateStats(buses.length);
+            
             if (buses.length === 0) {
-                busList.innerHTML = '<p style="text-align:center;color:#999;padding:50px;">ไม่พบรถที่ค้นหา</p>';
+                busList.innerHTML = `
+                    <div class="no-results">
+                        <div style="font-size: 3em;">🔍</div>
+                        <h3>ไม่พบรถที่ค้นหา</h3>
+                        <p>ลองเปลี่ยนคำค้นหาหรือล้างตัวกรอง</p>
+                        <button class="btn btn-clear" onclick="clearSearch()" style="margin-top: 20px;">
+                            🔄 ล้างการค้นหา
+                        </button>
+                    </div>
+                `;
                 return;
             }
             
@@ -600,6 +719,14 @@
             busList.innerHTML = html;
         }
 
+        // ฟังก์ชันค้นหาแบบ Debounce
+        let searchTimeout;
+        function searchBusesDebounced() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(searchBuses, 300); // รอ 300ms ก่อนค้นหา
+        }
+
+        // ฟังก์ชันค้นหารถ
         function searchBuses() {
             const busNumber = document.getElementById('searchBusNumber').value.toLowerCase();
             const contractor = document.getElementById('filterContractor').value;
@@ -618,8 +745,15 @@
             displayBuses(filtered);
         }
 
-        console.log('✅ ระบบพร้อมใช้งาน - เชื่อม Microsoft Forms + Smartsheet!');
+        // ฟังก์ชันล้างการค้นหา
+        function clearSearch() {
+            document.getElementById('searchBusNumber').value = '';
+            document.getElementById('filterContractor').value = '';
+            document.getElementById('filterProvince').value = '';
+            document.getElementById('searchZone').value = '';
+            document.getElementById('searchRoute').value = '';
+            displayAllBuses();
+        }
     </script>
 </body>
 </html>
-
