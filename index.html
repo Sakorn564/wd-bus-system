@@ -114,13 +114,6 @@
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         }
 
-        .btn-clear {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            padding: 10px 30px;
-            font-size: 1em;
-            margin-top: 10px;
-        }
-
         .search-filters {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -139,44 +132,43 @@
 
         .bus-list {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
 
         .bus-card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
             transition: all 0.3s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
         }
 
         .bus-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
         }
 
         .bus-number-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #ff9800 0%, #ff6b00 100%);
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
             color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
+            padding: 10px 25px;
+            border-radius: 25px;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1.3em;
             margin-bottom: 15px;
         }
 
         .contractor-badge {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85em;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
             font-weight: bold;
-            margin-left: 8px;
+            margin-left: 10px;
         }
 
         .contractor-somsak {
@@ -194,27 +186,15 @@
             color: #7b1fa2;
         }
 
-        .bus-route-title {
-            color: #333;
-            font-size: 1.1em;
-            font-weight: bold;
+        .info-row {
             margin: 10px 0;
-            min-height: 50px;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            margin: 8px 0;
-            padding: 8px;
+            padding: 10px;
             background: #f8f9fa;
-            border-radius: 6px;
-            font-size: 0.95em;
+            border-radius: 8px;
         }
 
-        .info-item strong {
+        .info-row strong {
             color: #667eea;
-            min-width: 100px;
         }
 
         .company-grid {
@@ -278,56 +258,11 @@
             border-left: 4px solid #667eea;
         }
 
-        .update-date {
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .update-date small {
-            color: #666;
-            font-size: 0.95em;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            background: #fff3cd;
-            border-radius: 15px;
-            grid-column: 1 / -1;
-        }
-
-        .no-results h3 {
-            color: #856404;
-            margin: 20px 0;
-        }
-
-        .no-results p {
-            color: #856404;
-        }
-
-        @media (max-width: 1400px) {
-            .bus-list {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .bus-list {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
         @media (max-width: 768px) {
-            .bus-list {
+            .bus-list, .company-grid {
                 grid-template-columns: 1fr;
             }
             .search-filters {
-                grid-template-columns: 1fr;
-            }
-            .company-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -339,9 +274,7 @@
         <div class="header">
             <h1>🚌 ระบบจัดการสายรถ Western Digital</h1>
             <p>Bus Route Management System - One Stop Service</p>
-            <p style="color: #11998e; font-weight: bold; margin-top: 10px;">
-                ✅ ข้อมูลครบ <span id="headerTotalBuses">68</span> รถ | ลงทะเบียนผ่าน Microsoft Forms
-            </p>
+            <p style="color: #11998e; font-weight: bold; margin-top: 10px;">✅ ข้อมูลครบ 60+ รถ | ลงทะเบียนผ่าน Microsoft Forms</p>
         </div>
 
         <!-- Home Section -->
@@ -349,13 +282,13 @@
             <div class="welcome-box">
                 <h2>🎉 ยินดีต้อนรับสู่ระบบจัดการสายรถ!</h2>
                 <p style="color: #666; font-size: 1.2em; margin-bottom: 30px;">
-                    ข้อมูลครบถ้วน <span id="homeTotalBuses">68</span> รถ จาก 3 บริษัท<br>
+                    ข้อมูลครบถ้วน 60+ รถ จาก 3 บริษัท<br>
                     <strong style="color: #11998e;">เข้ามาแล้วใช้งานได้เลยทันที!</strong>
                 </p>
 
                 <div class="stats">
                     <div class="stat-card">
-                        <div class="stat-number" id="statTotalBuses">68</div>
+                        <div class="stat-number">60+</div>
                         <div class="stat-label">รถทั้งหมด</div>
                     </div>
                     <div class="stat-card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
@@ -363,11 +296,11 @@
                         <div class="stat-label">บริษัทรถ</div>
                     </div>
                     <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        <div class="stat-number" id="statTotalZones">15</div>
+                        <div class="stat-number">15</div>
                         <div class="stat-label">โซนให้บริการ</div>
                     </div>
                     <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                        <div class="stat-number" id="statTotalProvinces">4</div>
+                        <div class="stat-number">4</div>
                         <div class="stat-label">จังหวัด</div>
                     </div>
                 </div>
@@ -387,7 +320,7 @@
                 </div>
 
                 <div style="margin-top: 30px;">
-                    <a href="https://app.smartsheet.com/b/form/1d5ec94a5378408298b1257488f58f5b" 
+                    <a href="https://app.smartsheet.com/b/form/228b63381cd542e584c6f92960277d83" 
                        target="_blank" 
                        class="btn btn-feedback">
                         💬 แจ้งปัญหา/ข้อเสนอแนะ
@@ -421,13 +354,6 @@
                         📧 Ext. 614719, 612778
                     </p>
                 </div>
-
-                <div class="update-date">
-                    <small>
-                        📅 ข้อมูลอัพเดทล่าสุด: <strong id="lastUpdateDate">2025-01-26</strong> | 
-                        ติดต่อ Admin สำหรับการเปลี่ยนแปลงข้อมูล
-                    </small>
-                </div>
             </div>
         </div>
 
@@ -456,29 +382,27 @@
                 <input type="text" id="searchRoute" placeholder="🎯 เส้นทาง" oninput="searchBuses()">
             </div>
 
-            <div style="text-align: center; margin-bottom: 20px;">
-                <button class="btn btn-clear" onclick="clearSearch()">
-                    🔄 ล้างการค้นหา
-                </button>
-            </div>
-
             <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
                 <strong style="color: #1976d2; font-size: 1.1em;">💡 เคล็ดลับการค้นหา:</strong>
                 <p style="color: #555; margin-top: 10px; line-height: 1.8;">
                     • <strong>หมายเลขรถ:</strong> B7, B53, V2, SP13 (ค้นหาแบบบางส่วนได้)<br>
-                    • <strong>Contractor:</strong> SOMSAK (<span id="tipSomsak">23</span> คัน), RACHA (<span id="tipRacha">12</span> คัน), ATP30 (<span id="tipATP30">33</span> คัน)<br>
+                    • <strong>Contractor:</strong> SOMSAK (34 คัน), RACHA (13 คัน), ATP30 (35 คัน)<br>
                     • <strong>จังหวัด:</strong> กรองตามพื้นที่<br>
                     • <strong>โซน:</strong> สนามชัย, กบินทร์บุรี, ประจันตคาม, กรอกสมบูรณ์<br>
                     • <strong>เส้นทาง:</strong> ชื่อหมู่บ้าน/พื้นที่
                 </p>
             </div>
 
-            <div id="searchResults" style="margin-bottom: 20px;"></div>
+            <div id="searchResults" style="margin-bottom: 20px;">
+                <strong style="color: #667eea; font-size: 1.2em;">
+                    พบทั้งหมด: <span id="resultCount">68</span> รถ
+                </strong>
+            </div>
 
             <div id="busList" class="bus-list"></div>
         </div>
 
-        <!-- Companies Section (เหมือนเดิม) -->
+        <!-- Companies Section -->
         <div id="companies-section" class="section">
             <button class="btn btn-back" onclick="showSection('home')">← กลับหน้าหลัก</button>
             
@@ -495,7 +419,7 @@
                     </div>
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
-                        <div class="route-item">รถทั้งหมด: <span id="companySomsak">23</span> คัน</div>
+                        <div class="route-item">รถทั้งหมด: 34 คัน</div>
                         <div class="route-item">จังหวัด: ฉะเชิงเทรา, ปราจีนบุรี, สระแก้ว</div>
                     </div>
                     <div class="contact-info">
@@ -525,7 +449,7 @@
                     </div>
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
-                        <div class="route-item">รถทั้งหมด: <span id="companyRacha">12</span> คัน</div>
+                        <div class="route-item">รถทั้งหมด: 13 คัน</div>
                         <div class="route-item">จังหวัด: ปราจีนบุรี, ฉะเชิงเทรา</div>
                     </div>
                     <div class="contact-info">
@@ -547,7 +471,7 @@
                     </div>
                     <div class="route-list">
                         <h4>📊 สถิติ:</h4>
-                        <div class="route-item">รถทั้งหมด: <span id="companyATP30">33</span> คัน</div>
+                        <div class="route-item">รถทั้งหมด: 35 คัน</div>
                         <div class="route-item">จังหวัด: นครนายก, ปราจีนบุรี, ฉะเชิงเทรา</div>
                     </div>
                     <div class="contact-info">
@@ -566,9 +490,135 @@
         </div>
     </div>
 
-    <!-- JavaScript ที่แก้ไขแล้ว -->
-    <script src="data:text/javascript;charset=utf-8,
-        // (วางโค้ด JavaScript ที่แก้ไขแล้วด้านบนตรงนี้)
-    "></script>
+    <script>
+        const allBuses = [
+            {busNumber:'B7',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'ศูนย์วิจัยยาง'},
+            {busNumber:'B21',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'คีรี'},
+            {busNumber:'B55',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'อนามัยหนองยาง'},
+            {busNumber:'B55/1',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'สนามชัย - ท่าซุง'},
+            {busNumber:'B59',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'บ้านหินแร่'},
+            {busNumber:'B59/1',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'อนามัยชำป่างาม-วัดหนองบอน'},
+            {busNumber:'B25',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'วงเวียนกบินทร์บุรี-ทุ่งแฝก'},
+            {busNumber:'B27',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'นาดี-บ้านโคก'},
+            {busNumber:'B38',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'อนามัยเขาไม้แก้ว-เขาลูกช้าง'},
+            {busNumber:'B53/1',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'อบต.วังท่าช้าง-เขาไม้แก้ว'},
+            {busNumber:'B58',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'โนนสะอาด-กบินทร์บุรี'},
+            {busNumber:'SP13',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'โคกกระท้อน'},
+            {busNumber:'B23',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'ท่าเกษม'},
+            {busNumber:'B37',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'เขาสิงโต-บ้านแก้ง'},
+            {busNumber:'B44',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'อบต.หนองบอน'},
+            {busNumber:'B46',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'โคกปี่ฆ้อง-หนองปัญหา'},
+            {busNumber:'B46/1',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'โคกสัมพันธ์ - บะขมิ้น'},
+            {busNumber:'B53',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'วังตะเคียน-หนองสังข์'},
+            {busNumber:'B53/2',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'วังตะเคียน-ตรอกปลาไหล'},
+            {busNumber:'B67',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'เขาฉกรรจ์'},
+            {busNumber:'B67/1',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'น้ำซับ-สระแก้ว'},
+            {busNumber:'B26',contractor:'Somsak',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'บ้านเอื้ออาทรปราจีน'},
+            {busNumber:'B68',contractor:'Somsak',province:'ปราจีนบุรี',zone:'สายสั้น',route:'โป่งไผ่'},
+            {busNumber:'V2',contractor:'Racha',province:'ปราจีนบุรี',zone:'ท่าตูม',route:'ท่าตูม'},
+            {busNumber:'V11',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'หนองตลาด-เขาลูกช้าง'},
+            {busNumber:'V21',contractor:'Racha',province:'ปราจีนบุรี',zone:'ศรีมหาโพธิ',route:'บ้านดงกระทงยาม'},
+            {busNumber:'V33',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'เมืองเก่า-กบินทร์บุรี'},
+            {busNumber:'V41',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'หนองบุญเกิด'},
+            {busNumber:'V1',contractor:'Racha',province:'ปราจีนบุรี',zone:'ท่าตูม',route:'บ้านของเรา'},
+            {busNumber:'V19',contractor:'Racha',province:'ปราจีนบุรี',zone:'ศรีมหาโพธิ',route:'บ้านดงกระทงยาม'},
+            {busNumber:'V24',contractor:'Racha',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'ทุ่งสบก'},
+            {busNumber:'V30',contractor:'Racha',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'พนม-สนามชัย'},
+            {busNumber:'V31',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'กบินทร์บุรี-ทุ่งแฝก'},
+            {busNumber:'V34',contractor:'Racha',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'ประจันตคาม'},
+            {busNumber:'V39',contractor:'Racha',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'หัวกระสังข์'},
+            {busNumber:'B24',contractor:'ATP30',province:'นครนายก',zone:'นครนายก',route:'บ้านนา'},
+            {busNumber:'B30',contractor:'ATP30',province:'นครนายก',zone:'นครนายก',route:'ดงละคร'},
+            {busNumber:'B64',contractor:'ATP30',province:'นครนายก',zone:'นครนายก',route:'อบต.เขาพระ'},
+            {busNumber:'B2',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'ทุ่งสบก - ดงบัง'},
+            {busNumber:'B20',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'หนองจิก - บ้านหอย'},
+            {busNumber:'B29',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'เนินไฮ-บ้านโง้ง'},
+            {busNumber:'B35',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'ประเถท-น้ำตกธารทิพย์'},
+            {busNumber:'B35/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'บ้านท่าเรือ-หน้าวัดบุฝ้าย'},
+            {busNumber:'B35/2',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'หน้า FBT'},
+            {busNumber:'B5',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'สี่แยกโคกมะกอก-บ้านค้อ'},
+            {busNumber:'B10',contractor:'ATP30',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'แยกนเรศวร-ถนนต่ำ - BigC'},
+            {busNumber:'B14',contractor:'ATP30',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'(เดย์) ปราจีนบุรี-แยกนเรศวร'},
+            {busNumber:'B3',contractor:'ATP30',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'เกาะเค็ด-แยกม.ราม'},
+            {busNumber:'B4',contractor:'ATP30',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'เนินหอม'},
+            {busNumber:'B1/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'สายสั้น',route:'ท่าตูม'},
+            {busNumber:'B49',contractor:'ATP30',province:'ปราจีนบุรี',zone:'สายสั้น',route:'วัดระเบาะไผ่-โคกไม้แดง'},
+            {busNumber:'B8',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'แยกราชสาส์น'},
+            {busNumber:'B9',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'ศาลาตลาดเกาะขนุน'},
+            {busNumber:'B31',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'บางคล้า-หัวไทร'},
+            {busNumber:'B15',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'วัดแหลมไผ่ศรี'},
+            {busNumber:'B43',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'ฉะเชิงเทรา'},
+            {busNumber:'B69',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'แยกวัดหนองบัว'},
+            {busNumber:'B21/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'หนองแสง - หนองหว้า'},
+            {busNumber:'B22',contractor:'ATP30',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'โคกพนมดี'},
+            {busNumber:'B32',contractor:'ATP30',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'บ้านสร้าง-โคกปีบ'},
+            {busNumber:'B42',contractor:'ATP30',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'หนองว่านเหลือง-ศรีมโหสถ'},
+            {busNumber:'B50 Shift',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'คลองรั้ง รอบ Shift'},
+            {busNumber:'B50 Day',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'คลองรั้ง รอบ Day'},
+            {busNumber:'B50/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'วัดบุยายใบ - คลองรั้ง'},
+            {busNumber:'B36',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'โคกผาสุข-อ่างตามี'},
+            {busNumber:'B45',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'มาบนาดี'},
+            {busNumber:'B27/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'สี่แยกบ้านโคก'},
+            {busNumber:'B45/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'กรอกสมบูรณ์'}
+        ];
+
+        function showSection(sectionName) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionName + '-section').classList.add('active');
+            if (sectionName === 'search') displayAllBuses();
+        }
+
+        function displayAllBuses() {
+            displayBuses(allBuses);
+        }
+
+        function displayBuses(buses) {
+            document.getElementById('resultCount').textContent = buses.length;
+            const busList = document.getElementById('busList');
+            
+            if (buses.length === 0) {
+                busList.innerHTML = '<p style="text-align:center;color:#999;padding:50px;">ไม่พบรถที่ค้นหา</p>';
+                return;
+            }
+            
+            let html = '';
+            buses.forEach(bus => {
+                const contractorClass = `contractor-${bus.contractor.toLowerCase()}`;
+                html += `
+                    <div class="bus-card">
+                        <div class="bus-number-badge">🚌 ${bus.busNumber}</div>
+                        <span class="contractor-badge ${contractorClass}">${bus.contractor}</span>
+                        <h3 style="color: #667eea; margin: 15px 0;">${bus.route}</h3>
+                        <div class="info-row"><strong>🏢 Contractor:</strong> ${bus.contractor}</div>
+                        <div class="info-row"><strong>📍 จังหวัด:</strong> ${bus.province}</div>
+                        <div class="info-row"><strong>🗺️ โซน:</strong> ${bus.zone}</div>
+                        <div class="info-row"><strong>🎯 เส้นทาง:</strong> ${bus.route}</div>
+                    </div>
+                `;
+            });
+            
+            busList.innerHTML = html;
+        }
+
+        function searchBuses() {
+            const busNumber = document.getElementById('searchBusNumber').value.toLowerCase();
+            const contractor = document.getElementById('filterContractor').value;
+            const province = document.getElementById('filterProvince').value;
+            const zone = document.getElementById('searchZone').value.toLowerCase();
+            const route = document.getElementById('searchRoute').value.toLowerCase();
+            
+            let filtered = allBuses;
+            
+            if (busNumber) filtered = filtered.filter(b => b.busNumber.toLowerCase().includes(busNumber));
+            if (contractor) filtered = filtered.filter(b => b.contractor === contractor);
+            if (province) filtered = filtered.filter(b => b.province === province);
+            if (zone) filtered = filtered.filter(b => b.zone.toLowerCase().includes(zone));
+            if (route) filtered = filtered.filter(b => b.route.toLowerCase().includes(route));
+            
+            displayBuses(filtered);
+        }
+
+        console.log('✅ ระบบพร้อมใช้งาน - เชื่อม Microsoft Forms + Smartsheet!');
+    </script>
 </body>
 </html>
