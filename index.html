@@ -137,7 +137,6 @@
             font-size: 1em;
         }
 
-        /* ⭐ ปรับ Grid Layout ให้แสดง 4 คอลัมน์ */
         .bus-list {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -145,7 +144,6 @@
             margin-top: 20px;
         }
 
-        /* ⭐ ปรับ Card ให้เหมือนในรูป */
         .bus-card {
             background: white;
             border: 2px solid #e0e0e0;
@@ -161,7 +159,6 @@
             border-color: #667eea;
         }
 
-        /* ⭐ Badge หมายเลขรถ */
         .bus-number-badge {
             display: inline-block;
             background: linear-gradient(135deg, #ff9800 0%, #ff6b00 100%);
@@ -173,7 +170,6 @@
             margin-bottom: 15px;
         }
 
-        /* ⭐ Badge Contractor */
         .contractor-badge {
             display: inline-block;
             padding: 4px 12px;
@@ -198,7 +194,6 @@
             color: #7b1fa2;
         }
 
-        /* ⭐ ข้อมูลในการ์ด */
         .bus-route-title {
             color: #333;
             font-size: 1.1em;
@@ -313,21 +308,18 @@
             color: #856404;
         }
 
-        /* ⭐ Responsive: 3 คอลัมน์บน Tablet */
         @media (max-width: 1400px) {
             .bus-list {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
 
-        /* ⭐ Responsive: 2 คอลัมน์บนมือถือใหญ่ */
         @media (max-width: 1024px) {
             .bus-list {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* ⭐ Responsive: 1 คอลัมน์บนมือถือเล็ก */
         @media (max-width: 768px) {
             .bus-list {
                 grid-template-columns: 1fr;
@@ -430,7 +422,6 @@
                     </p>
                 </div>
 
-                <!-- วันที่อัพเดทข้อมูล -->
                 <div class="update-date">
                     <small>
                         📅 ข้อมูลอัพเดทล่าสุด: <strong id="lastUpdateDate">2025-01-26</strong> | 
@@ -447,7 +438,7 @@
             <h2 style="color: #667eea; margin: 30px 0;">🔍 ค้นหารถด้วยหมายเลข จังหวัด โซน หรือเส้นทาง</h2>
             
             <div class="search-filters">
-                <input type="text" id="searchBusNumber" placeholder="🔢 หมายเลขรถ (B7, V2, SP13)" oninput="searchBusesDebounced()">
+                <input type="text" id="searchBusNumber" placeholder="🔢 หมายเลขรถ (B7, V2, SP13)" oninput="searchBuses()">
                 <select id="filterContractor" onchange="searchBuses()">
                     <option value="">ทุก Contractor</option>
                     <option value="Somsak">SOMSAK</option>
@@ -461,8 +452,8 @@
                     <option value="สระแก้ว">สระแก้ว</option>
                     <option value="นครนายก">นครนายก</option>
                 </select>
-                <input type="text" id="searchZone" placeholder="🗺️ โซน (สนามชัย, กบินทร์บุรี)" oninput="searchBusesDebounced()">
-                <input type="text" id="searchRoute" placeholder="🎯 เส้นทาง" oninput="searchBusesDebounced()">
+                <input type="text" id="searchZone" placeholder="🗺️ โซน (สนามชัย, กบินทร์บุรี)" oninput="searchBuses()">
+                <input type="text" id="searchRoute" placeholder="🎯 เส้นทาง" oninput="searchBuses()">
             </div>
 
             <div style="text-align: center; margin-bottom: 20px;">
@@ -487,7 +478,7 @@
             <div id="busList" class="bus-list"></div>
         </div>
 
-        <!-- Companies Section -->
+        <!-- Companies Section (เหมือนเดิม) -->
         <div id="companies-section" class="section">
             <button class="btn btn-back" onclick="showSection('home')">← กลับหน้าหลัก</button>
             
@@ -575,225 +566,9 @@
         </div>
     </div>
 
-    <script>
-        // ข้อมูลรถทั้งหมด
-        const allBuses = [
-            {busNumber:'B7',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'ศูนย์วิจัยยาง'},
-            {busNumber:'B21',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'คีรี'},
-            {busNumber:'B55',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'อนามัยหนองยาง'},
-            {busNumber:'B55/1',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'สนามชัย - ท่าซุง'},
-            {busNumber:'B59',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'บ้านหินแร่'},
-            {busNumber:'B59/1',contractor:'Somsak',province:'ฉะเชิงเทรา',zone:'สนามชัย',route:'อนามัยชำป่างาม-วัดหนองบอน'},
-            {busNumber:'B25',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'วงเวียนกบินทร์บุรี-ทุ่งแฝก'},
-            {busNumber:'B27',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'นาดี-บ้านโคก'},
-            {busNumber:'B38',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'อนามัยเขาไม้แก้ว-เขาลูกช้าง'},
-            {busNumber:'B53/1',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'อบต.วังท่าช้าง-เขาไม้แก้ว'},
-            {busNumber:'B58',contractor:'Somsak',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'โนนสะอาด-กบินทร์บุรี'},
-            {busNumber:'SP13',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'โคกกระท้อน'},
-            {busNumber:'B23',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'ท่าเกษม'},
-            {busNumber:'B37',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'เขาสิงโต-บ้านแก้ง'},
-            {busNumber:'B44',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'อบต.หนองบอน'},
-            {busNumber:'B46',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'โคกปี่ฆ้อง-หนองปัญหา'},
-            {busNumber:'B46/1',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'โคกสัมพันธ์ - บะขมิ้น'},
-            {busNumber:'B53',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'วังตะเคียน-หนองสังข์'},
-            {busNumber:'B53/2',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'วังตะเคียน-ตรอกปลาไหล'},
-            {busNumber:'B67',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'เขาฉกรรจ์'},
-            {busNumber:'B67/1',contractor:'Somsak',province:'สระแก้ว',zone:'สระแก้ว',route:'น้ำซับ-สระแก้ว'},
-            {busNumber:'B26',contractor:'Somsak',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'บ้านเอื้ออาทรปราจีน'},
-            {busNumber:'B68',contractor:'Somsak',province:'ปราจีนบุรี',zone:'สายสั้น',route:'โป่งไผ่'},
-            {busNumber:'V2',contractor:'Racha',province:'ปราจีนบุรี',zone:'ท่าตูม',route:'ท่าตูม'},
-            {busNumber:'V11',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'หนองตลาด-เขาลูกช้าง'},
-            {busNumber:'V21',contractor:'Racha',province:'ปราจีนบุรี',zone:'ศรีมหาโพธิ',route:'บ้านดงกระทงยาม'},
-            {busNumber:'V33',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'เมืองเก่า-กบินทร์บุรี'},
-            {busNumber:'V41',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'หนองบุญเกิด'},
-            {busNumber:'V1',contractor:'Racha',province:'ปราจีนบุรี',zone:'ท่าตูม',route:'บ้านของเรา'},
-            {busNumber:'V19',contractor:'Racha',province:'ปราจีนบุรี',zone:'ศรีมหาโพธิ',route:'บ้านดงกระทงยาม'},
-            {busNumber:'V24',contractor:'Racha',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'ทุ่งสบก'},
-            {busNumber:'V30',contractor:'Racha',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'พนม-สนามชัย'},
-            {busNumber:'V31',contractor:'Racha',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'กบินทร์บุรี-ทุ่งแฝก'},
-            {busNumber:'V34',contractor:'Racha',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'ประจันตคาม'},
-            {busNumber:'V39',contractor:'Racha',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'หัวกระสังข์'},
-            {busNumber:'B24',contractor:'ATP30',province:'นครนายก',zone:'นครนายก',route:'บ้านนา'},
-            {busNumber:'B30',contractor:'ATP30',province:'นครนายก',zone:'นครนายก',route:'ดงละคร'},
-            {busNumber:'B64',contractor:'ATP30',province:'นครนายก',zone:'นครนายก',route:'อบต.เขาพระ'},
-            {busNumber:'B2',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'ทุ่งสบก - ดงบัง'},
-            {busNumber:'B20',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'หนองจิก - บ้านหอย'},
-            {busNumber:'B29',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'เนินไฮ-บ้านโง้ง'},
-            {busNumber:'B35',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'ประเถท-น้ำตกธารทิพย์'},
-            {busNumber:'B35/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'บ้านท่าเรือ-หน้าวัดบุฝ้าย'},
-            {busNumber:'B35/2',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'หน้า FBT'},
-            {busNumber:'B5',contractor:'ATP30',province:'ปราจีนบุรี',zone:'ประจันตคาม',route:'สี่แยกโคกมะกอก-บ้านค้อ'},
-            {busNumber:'B10',contractor:'ATP30',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'แยกนเรศวร-ถนนต่ำ - BigC'},
-            {busNumber:'B14',contractor:'ATP30',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'(เดย์) ปราจีนบุรี-แยกนเรศวร'},
-            {busNumber:'B3',contractor:'ATP30',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'เกาะเค็ด-แยกม.ราม'},
-            {busNumber:'B4',contractor:'ATP30',province:'ปราจีนบุรี',zone:'เมืองปราจีนบุรี',route:'เนินหอม'},
-            {busNumber:'B1/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'สายสั้น',route:'ท่าตูม'},
-            {busNumber:'B49',contractor:'ATP30',province:'ปราจีนบุรี',zone:'สายสั้น',route:'วัดระเบาะไผ่-โคกไม้แดง'},
-            {busNumber:'B8',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'แยกราชสาส์น'},
-            {busNumber:'B9',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'ศาลาตลาดเกาะขนุน'},
-            {busNumber:'B31',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'บางคล้า-หัวไทร'},
-            {busNumber:'B15',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'วัดแหลมไผ่ศรี'},
-            {busNumber:'B43',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'ฉะเชิงเทรา'},
-            {busNumber:'B69',contractor:'ATP30',province:'ฉะเชิงเทรา',zone:'พนมสารคาม',route:'แยกวัดหนองบัว'},
-            {busNumber:'B21/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'หนองแสง - หนองหว้า'},
-            {busNumber:'B22',contractor:'ATP30',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'โคกพนมดี'},
-            {busNumber:'B32',contractor:'ATP30',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'บ้านสร้าง-โคกปีบ'},
-            {busNumber:'B42',contractor:'ATP30',province:'ปราจีนบุรี',zone:'โคกปีบ',route:'หนองว่านเหลือง-ศรีมโหสถ'},
-            {busNumber:'B50 Shift',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'คลองรั้ง รอบ Shift'},
-            {busNumber:'B50 Day',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'คลองรั้ง รอบ Day'},
-            {busNumber:'B50/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'วัดบุยายใบ - คลองรั้ง'},
-            {busNumber:'B36',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'โคกผาสุข-อ่างตามี'},
-            {busNumber:'B45',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'มาบนาดี'},
-            {busNumber:'B27/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กบินทร์บุรี',route:'สี่แยกบ้านโคก'},
-            {busNumber:'B45/1',contractor:'ATP30',province:'ปราจีนบุรี',zone:'กรอกสมบูรณ์',route:'กรอกสมบูรณ์'}
-        ];
-
-        // วันที่อัพเดทข้อมูลล่าสุด
-        const lastUpdate = '2025-01-26';
-
-        // คำนวณสถิติจากข้อมูลจริง
-        const stats = {
-            total: allBuses.length,
-            somsak: allBuses.filter(b => b.contractor === 'Somsak').length,
-            racha: allBuses.filter(b => b.contractor === 'Racha').length,
-            atp30: allBuses.filter(b => b.contractor === 'ATP30').length,
-            provinces: [...new Set(allBuses.map(b => b.province))].length,
-            zones: [...new Set(allBuses.map(b => b.zone))].length
-        };
-
-        // อัพเดทตัวเลขทั้งหมดเมื่อโหลดหน้า
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('headerTotalBuses').textContent = stats.total;
-            document.getElementById('homeTotalBuses').textContent = stats.total;
-            document.getElementById('statTotalBuses').textContent = stats.total;
-            document.getElementById('statTotalZones').textContent = stats.zones;
-            document.getElementById('statTotalProvinces').textContent = stats.provinces;
-            document.getElementById('tipSomsak').textContent = stats.somsak;
-            document.getElementById('tipRacha').textContent = stats.racha;
-            document.getElementById('tipATP30').textContent = stats.atp30;
-            document.getElementById('companySomsak').textContent = stats.somsak;
-            document.getElementById('companyRacha').textContent = stats.racha;
-            document.getElementById('companyATP30').textContent = stats.atp30;
-            document.getElementById('lastUpdateDate').textContent = lastUpdate;
-            
-            console.log(`📊 สถิติระบบ: ${stats.total} รถ | Somsak: ${stats.somsak} | Racha: ${stats.racha} | ATP30: ${stats.atp30}`);
-            console.log('✅ ระบบพร้อมใช้งาน!');
-        });
-
-        // ฟังก์ชันเปลี่ยนหน้า
-        function showSection(sectionName) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(sectionName + '-section').classList.add('active');
-            
-            if (sectionName === 'search') {
-                displayAllBuses();
-            }
-        }
-
-        // แสดงรถทั้งหมด
-        function displayAllBuses() {
-            displayBuses(allBuses);
-        }
-
-        // แสดงสถิติการค้นหา
-        function updateStats(currentResults) {
-            document.getElementById('searchResults').innerHTML = `
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                            padding: 20px; border-radius: 15px; color: white; margin-bottom: 20px;">
-                    <div style="font-size: 1.5em; font-weight: bold;">
-                        📊 ผลการค้นหา: ${currentResults} รถ
-                    </div>
-                    <div style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">
-                        จากทั้งหมด ${stats.total} รถ ใน ${stats.provinces} จังหวัด ${stats.zones} โซน
-                    </div>
-                </div>
-            `;
-        }
-
-        // ⭐ แสดงรถตามเงื่อนไข - ปรับ HTML ให้เหมือนรูป
-        function displayBuses(buses) {
-            const busList = document.getElementById('busList');
-            
-            updateStats(buses.length);
-            
-            if (buses.length === 0) {
-                busList.innerHTML = `
-                    <div class="no-results">
-                        <div style="font-size: 3em;">🔍</div>
-                        <h3>ไม่พบรถที่ค้นหา</h3>
-                        <p>ลองเปลี่ยนคำค้นหาหรือล้างตัวกรอง</p>
-                        <button class="btn btn-clear" onclick="clearSearch()" style="margin-top: 20px;">
-                            🔄 ล้างการค้นหา
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-            
-            let html = '';
-            buses.forEach(bus => {
-                const contractorClass = `contractor-${bus.contractor.toLowerCase()}`;
-                html += `
-                    <div class="bus-card">
-                        <div class="bus-number-badge">🚌 หมายเลขรถ ${bus.busNumber}</div>
-                        <span class="contractor-badge ${contractorClass}">${bus.contractor}</span>
-                        
-                        <div class="bus-route-title">${bus.route}</div>
-                        
-                        <div class="info-item">
-                            <strong>Main Contractor:</strong> 
-                            <span>${bus.contractor}</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>📍 Zone ปลายทาง:</strong> 
-                            <span>${bus.zone}</span>
-                        </div>
-                        <div class="info-item">
-                            <strong>🗺️ เส้นทาง:</strong> 
-                            <span>${bus.route}</span>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            busList.innerHTML = html;
-        }
-
-        // ฟังก์ชันค้นหาแบบ Debounce
-        let searchTimeout;
-        function searchBusesDebounced() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(searchBuses, 300);
-        }
-
-        // ฟังก์ชันค้นหารถ
-        function searchBuses() {
-            const busNumber = document.getElementById('searchBusNumber').value.toLowerCase();
-            const contractor = document.getElementById('filterContractor').value;
-            const province = document.getElementById('filterProvince').value;
-            const zone = document.getElementById('searchZone').value.toLowerCase();
-            const route = document.getElementById('searchRoute').value.toLowerCase();
-            
-            let filtered = allBuses;
-            
-            if (busNumber) filtered = filtered.filter(b => b.busNumber.toLowerCase().includes(busNumber));
-            if (contractor) filtered = filtered.filter(b => b.contractor === contractor);
-            if (province) filtered = filtered.filter(b => b.province === province);
-            if (zone) filtered = filtered.filter(b => b.zone.toLowerCase().includes(zone));
-            if (route) filtered = filtered.filter(b => b.route.toLowerCase().includes(route));
-            
-            displayBuses(filtered);
-        }
-
-        // ฟังก์ชันล้างการค้นหา
-        function clearSearch() {
-            document.getElementById('searchBusNumber').value = '';
-            document.getElementById('filterContractor').value = '';
-            document.getElementById('filterProvince').value = '';
-            document.getElementById('searchZone').value = '';
-            document.getElementById('searchRoute').value = '';
-            displayAllBuses();
-        }
-    </script>
+    <!-- JavaScript ที่แก้ไขแล้ว -->
+    <script src="data:text/javascript;charset=utf-8,
+        // (วางโค้ด JavaScript ที่แก้ไขแล้วด้านบนตรงนี้)
+    "></script>
 </body>
 </html>
